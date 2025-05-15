@@ -5,7 +5,20 @@ use Illuminate\Support\Str;
 return [
 
     /*
-    |--------------------------------------------------------------------------
+    |-----------------------------            'charset' => env('DB_CHARSET', 'utf8mb4'),
+            'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true, // Enable strict mode for better SQL practices
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                PDO::ATTR_EMULATE_PREPARES => false, // Disable emulated prepared statements
+                PDO::ATTR_STRINGIFY_FETCHES => false, // Preserve data types
+                PDO::MYSQL_ATTR_FOUND_ROWS => true, // Use found rows instead of affected rows
+                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => true, // Verify SSL certificate
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // Always throw exceptions on error
+            ]) : [],------------------------------------
     | Default Database Connection Name
     |--------------------------------------------------------------------------
     |
@@ -55,11 +68,25 @@ return [
             'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
             'prefix' => '',
             'prefix_indexes' => true,
-            'strict' => false,
+            'strict' => true, // Enable strict mode for better SQL error handling
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                PDO::ATTR_EMULATE_PREPARES => false, // Disable emulation for real prepared statements
+                PDO::ATTR_STRINGIFY_FETCHES => false, // Get proper data types
+                PDO::MYSQL_ATTR_FOUND_ROWS => true, // Return found rows instead of affected rows
+                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => true, // Verify server SSL certificate
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // Always throw exceptions on errors
+                PDO::ATTR_PERSISTENT => false, // Disable persistent connections
             ]) : [],
+            'modes' => [
+                'ONLY_FULL_GROUP_BY',
+                'STRICT_TRANS_TABLES',
+                'NO_ZERO_IN_DATE',
+                'NO_ZERO_DATE',
+                'ERROR_FOR_DIVISION_BY_ZERO',
+                'NO_ENGINE_SUBSTITUTION',
+            ],
         ],
 
         'mariadb' => [

@@ -24,9 +24,31 @@ class PendudukController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $penduduks = Penduduk::with(['alamat', 'agama', 'pendidikan', 'pekerjaan'])->paginate(10);
+        $query = Penduduk::with(['alamat', 'agama', 'pendidikan', 'pekerjaan']);
+
+        // Search functionality
+        if ($request->has('search') && !empty($request->search)) {
+            $searchTerm = $request->search;
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('nama', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('nik', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('no_kk', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        // Dusun filter
+        if ($request->has('filter_dusun') && !empty($request->filter_dusun)) {
+            $query->whereHas('alamat', function ($q) use ($request) {
+                $q->where('dusun', $request->filter_dusun);
+            });
+        }
+
+        // Get the results with pagination
+        $perPage = $request->input('per_page', 10);
+        $penduduks = $query->paginate($perPage)->withQueryString();
+
         return view('penduduk.index', compact('penduduks'));
     }
 
