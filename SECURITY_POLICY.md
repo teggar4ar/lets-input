@@ -13,7 +13,7 @@ The application implements the following security middleware:
    - X-Frame-Options: SAMEORIGIN
    - X-XSS-Protection: 1; mode=block
    - Content-Security-Policy: Restricts content sources
-   - Strict-Transport-Security: Forces HTTPS
+   - Strict-Transport-Security: Optional, applied only when using HTTPS
 
 2. **PreventXssAttacks**: Sanitizes inputs and detects XSS attack patterns.
    - Monitors for common XSS vectors
@@ -70,9 +70,10 @@ The application implements the following security middleware:
 
 2. **Session Security**
    - Encrypted sessions
-   - Secure cookies
+   - Secure cookies (when using HTTPS)
    - Session timeout (60 minutes)
-   - HTTPS-only sessions
+   - HTTP-only cookies
+   - SameSite cookie policy
 
 ## File Upload Security
 

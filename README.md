@@ -45,9 +45,11 @@ This application has been hardened with the following security features:
    - Query parameterization
    - SQL injection prevention
 
-8. **HTTPS Enforcement**
-   - All traffic over HTTPS
-   - Strict Transport Security
+8. **HTTPS/HTTP Configuration**
+   - HTTPS enforcement is configurable
+   - Conditional security headers
+   - Support for both HTTP and HTTPS protocols
+   - Environment-based security settings
 
 ## Security Documentation
 
@@ -60,30 +62,70 @@ For more detailed information, please refer to:
 
 1. Clone the repository
 2. Copy `.env.example` to `.env` and configure your environment
-3. Generate an application key:
+3. Install dependencies:
+   ```
+   composer install
+   npm install
+   ```
+4. Build frontend assets:
+   ```
+   npm run build
+   ```
+5. Generate an application key:
    ```
    php artisan key:generate
    ```
-4. Run migrations:
+6. Run migrations:
    ```
    php artisan migrate
    ```
-5. Seed the database:
+7. Seed the database:
    ```
    php artisan db:seed
    ```
+   This will:
+   - Create reference data (religions, education levels, etc.)
+   - Generate operator accounts with random passwords
+   - Save operator credentials to `storage/app/operator-credentials.txt`
+
+## Documentation
+
+For comprehensive documentation, please refer to:
+
+- [Main Documentation](./DOCUMENTATION.md) - Overview and navigation
+- [User Guide](./USER_GUIDE.md) - Instructions for end users
+- [Technical Reference](./TECHNICAL_REFERENCE.md) - Details for developers
+- [Security Policy](./SECURITY_POLICY.md) - Security implementation details
+- [Secure Deployment Guide](./SECURE_DEPLOYMENT_GUIDE.md) - Deployment instructions
 
 ## Development
 
 For local development:
 
-```
+```powershell
+# Start the development server
 php artisan serve
+
+# Watch for frontend changes (in a separate terminal)
+npm run dev
 ```
 
-## Production Deployment
+## Troubleshooting
 
-For production deployment, please follow the [Secure Deployment Guide](./SECURE_DEPLOYMENT_GUIDE.md).
+### Database Seeding Issues
+
+If you encounter errors during database seeding:
+
+1. Check the migration files to ensure field lengths are sufficient
+2. For the specific "String data, right truncated" error, ensure the `pendidikan_sedangs` table's `nama_pendidikan_sedangs` field is at least 100 characters in length:
+   ```php
+   $table->string('nama_pendidikan_sedangs', 100);
+   ```
+3. After adjusting migration files, reset and re-run migrations:
+   ```powershell
+   php artisan migrate:fresh
+   php artisan db:seed
+   ```
 
 ## Security Reporting
 

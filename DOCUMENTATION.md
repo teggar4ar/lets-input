@@ -27,6 +27,11 @@ Welcome to the official documentation for the **Input Penduduk** application, a 
    - Server configuration
    - Environment setup
 
+5. [HTTP Usage Guide](./HTTP_USAGE_GUIDE.md)
+   - HTTP configuration for production
+   - Security considerations
+   - Best practices for HTTP deployment
+
 ## About Input Penduduk
 
 Input Penduduk is a comprehensive population data management system built with security as a primary concern. The application allows for:

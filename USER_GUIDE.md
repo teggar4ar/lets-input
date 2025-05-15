@@ -7,12 +7,13 @@ Welcome to the User Guide for the Input Penduduk application. This guide provide
 ## Table of Contents
 
 1. [Getting Started](#getting-started)
-2. [Dashboard Navigation](#dashboard-navigation)
-3. [Managing Population Data](#managing-population-data)
-4. [Searching and Filtering](#searching-and-filtering)
-5. [Data Export](#data-export)
-6. [Account Management](#account-management)
-7. [Troubleshooting](#troubleshooting)
+2. [Initial Setup](#initial-setup)
+3. [Dashboard Navigation](#dashboard-navigation)
+4. [Managing Population Data](#managing-population-data)
+5. [Searching and Filtering](#searching-and-filtering)
+6. [Data Export](#data-export)
+7. [Account Management](#account-management)
+8. [Troubleshooting](#troubleshooting)
 
 ## Getting Started
 
@@ -31,6 +32,45 @@ If this is your first time logging in, you may be prompted to:
 - Change your initial password
 - Set up two-factor authentication (if enabled)
 - Review and accept the application's terms of use
+
+## Initial Setup
+
+### Database Initialization
+
+For system administrators setting up the application for the first time:
+
+1. Ensure the database connection is properly configured in the `.env` file
+2. Run database migrations to create the necessary tables:
+   ```
+   php artisan migrate
+   ```
+3. Seed the database with initial reference data and operator accounts:
+   ```
+   php artisan db:seed
+   ```
+
+### Default Operator Accounts
+
+The seeding process creates multiple operator accounts (operator1 through operator10) with randomly generated passwords. These credentials are saved to:
+```
+storage/app/operator-credentials.txt
+```
+
+For security reasons, you should:
+1. Access this file after initial setup
+2. Distribute the credentials to your operators securely
+3. Require operators to change their passwords upon first login
+4. Delete the credentials file once all operators have been set up
+
+### Reference Data
+
+The application comes pre-loaded with standard reference data including:
+- Religions (Islam, Kristen, Katolik, etc.)
+- Education levels
+- Occupations
+- Marital statuses
+- Family relationship types
+- And other necessary lookup values
 
 ## Dashboard Navigation
 
@@ -101,23 +141,26 @@ The main navigation menu is located on the left side of the screen and includes:
 2. Enter a search term (name, NIK, or Family Card Number).
 3. Press Enter or click the search icon.
 4. The system will display all records matching your search criteria.
+5. Search is optimized with database indexes (as of May 15, 2025) for fast performance even with large datasets.
 
 ### Advanced Filtering
 
 1. Click the "Filter" button above the Penduduk list.
 2. Select filtering criteria:
-   - Region/Dusun
+   - Region/Dusun (optimized with database indexes)
    - Age range
    - Gender
    - Marital status
    - Other available filters
 3. Click "Apply Filter" to filter the records.
 4. To clear filters, click "Reset Filters".
+5. Filtered results maintain pagination and can be exported directly.
 
 ### Pagination
 
 - Navigate between pages using the pagination controls at the bottom of the list.
 - Adjust the number of items per page using the dropdown menu.
+- Default pagination shows 10 items per page, but can be adjusted to 25, 50, or 100 items.
 
 ## Data Export
 
@@ -127,6 +170,8 @@ The main navigation menu is located on the left side of the screen and includes:
 2. Click the "Export" button above the list.
 3. Select "Excel" as the export format.
 4. The system will generate and download an Excel file containing the current filtered data.
+5. Exports are handled by the ExportController (updated May 15, 2025) which preserves all applied filters.
+6. The filename will include the date and filter information if any filters are applied.
 
 ### Customizing Export
 
@@ -135,6 +180,8 @@ The main navigation menu is located on the left side of the screen and includes:
 3. Choose which fields to include in the export.
 4. Select the export format.
 5. Click "Generate Export".
+
+> **Note**: All data exports are logged in the system's audit log for security and compliance purposes.
 
 ## Account Management
 

@@ -56,6 +56,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Force HTTPS
+    |--------------------------------------------------------------------------
+    |
+    | This option determines whether the application should enforce HTTPS
+    | connections. When set to true, HTTPS security headers will be applied
+    | and HTTP-specific restrictions will be enforced. Set to false to allow
+    | HTTP connections in production.
+    |
+    */
+
+    'force_https' => (bool) env('FORCE_HTTPS', true),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |

@@ -28,9 +28,9 @@ This document provides guidelines for securely deploying the Input Penduduk appl
 ## Server Configuration
 
 ### Web Server (Apache or Nginx)
-- [ ] Configure HTTPS with strong SSL/TLS settings
+- [ ] Configure HTTPS with strong SSL/TLS settings (recommended)
 - [ ] Enable HTTP/2 for better performance
-- [ ] Redirect HTTP to HTTPS
+- [ ] Configure HTTP access if required (see HTTP Protocol Configuration below)
 - [ ] Implement proper server hardening
 - [ ] Set secure headers (already handled by SecureHeaders middleware)
 
@@ -49,6 +49,30 @@ This document provides guidelines for securely deploying the Input Penduduk appl
   - `session.cookie_secure = 1`
   - `session.cookie_samesite = Strict`
   - `session.use_strict_mode = 1`
+
+### HTTP Protocol Configuration
+
+If you need to run the application over HTTP in production:
+
+1. Configure environment variables in `.env`:
+   ```
+   FORCE_HTTPS=false
+   SESSION_SECURE_COOKIE=false
+   ```
+
+2. Security considerations when using HTTP:
+   - The application will not use HSTS headers
+   - Session cookies will not have the 'secure' flag
+   - Be aware that data transmitted over HTTP is not encrypted
+   - Consider using a secure VPN if deploying on an internal network
+   - Implement network-level security controls to protect unencrypted traffic
+
+3. Server configuration recommendations for HTTP-only deployments:
+   - Restrict access to trusted IP ranges when possible
+   - Implement additional network security measures
+   - Consider using a reverse proxy with TLS termination if feasible
+
+> **Note**: Using HTTPS is still highly recommended for any production deployment handling sensitive data. HTTP should only be used in specific circumstances where HTTPS is not feasible, such as in completely isolated internal networks.
 
 ### Firewall Configuration
 - [ ] Enable firewall (UFW, iptables, etc.)

@@ -14,7 +14,7 @@ class PendudukExport implements FromCollection, WithHeadings, WithMapping, WithC
 {
     protected $request;
 
-    public function __construct(Request $request = null)
+    public function __construct(Request $request)
     {
         $this->request = $request;
     }

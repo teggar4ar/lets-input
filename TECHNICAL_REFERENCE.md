@@ -77,7 +77,9 @@ The application centers around the following key entities:
    - StatKawin (Marital Status)
    - And many others
 
-### Key Database Tables
+### Database Tables
+
+The application uses several database tables to store and manage data. Here are some key tables with their important fields:
 
 #### Penduduks Table
 
@@ -103,22 +105,26 @@ Stores the core population data with the following key fields:
 | updated_at             | timestamp    | Record update timestamp              |
 | deleted_at             | timestamp    | Soft delete timestamp (if deleted)   |
 
-#### Alamats Table
+#### Reference Tables
 
-Stores address information:
+The application uses various reference tables to store standardized values:
 
-| Field           | Type         | Description                          |
-|-----------------|--------------|--------------------------------------|
-| id              | bigint       | Primary key                          |
-| nama_alamat     | text         | Address text                         |
-| dusun           | varchar(255) | Sub-village name                     |
-| no_rt           | int          | RT number                            |
-| no_rw           | int          | RW number                            |
-| lat             | decimal      | Latitude (optional)                  |
-| lng             | decimal      | Longitude (optional)                 |
-| alamat_sekarang | text         | Current address (if different)       |
-| created_at      | timestamp    | Record creation timestamp            |
-| updated_at      | timestamp    | Record update timestamp              |
+| Table Name            | Primary Field              | Field Length | Description                        |
+|-----------------------|----------------------------|-------------:|------------------------------------| 
+| agamas                | nama_agama                 | 255          | Religions                          |
+| pendidikans           | nama_pendidikan            | 255          | Education levels                   |
+| pendidikan_sedangs    | nama_pendidikan_sedangs    | 100          | Current education status           |
+| pekerjaans            | nama_pekerjaan             | 255          | Occupations                        |
+| stat_kawins           | nama_status_kawin          | 255          | Marital status                     |
+| stat_hub_keluargas    | nama_status_hub_keluarga   | 255          | Family relationship status         |
+| gol_darahs            | nama_golongan_darah        | 255          | Blood types                        |
+| cacats                | nama_cacat                 | 255          | Disability types                   |
+| cara_kbs              | nama_cara_kb               | 255          | Family planning methods            |
+| stat_rekams           | nama_status_rekam          | 255          | ID card recording status           |
+| stat_dasars           | nama_status_dasar          | 255          | Basic population status            |
+| asuransis             | nama_asuransi              | 255          | Insurance types                    |
+
+> Note: Field lengths are important to consider when adding new reference data through seeders. The `pendidikan_sedangs` table in particular requires values to be under 100 characters.
 
 ### Entity Relationships
 
@@ -204,14 +210,74 @@ For custom development and extension:
 
 ## Performance Considerations
 
-- Database indexes are in place for commonly queried fields
+- Database indexes are in place for commonly queried fields:
+  - Indexed fields include `nama`, `no_kk` on the `penduduks` table
+  - `dusun` field is indexed on the `alamats` table for efficient filtering
+  - These indexes were added on May 15, 2025 to improve search performance
 - Pagination is implemented for large data sets
 - Caching is configured for appropriate data
 - Eager loading is used to prevent N+1 query problems
 
+## Database Seeding
+
+The application includes several database seeders to populate initial data:
+
+1. **ReferenceTablesSeeder**
+   - Populates all reference tables with standard values
+   - Includes religions, education levels, occupations, etc.
+   - Important note: Some reference data has character length limitations
+     - The `pendidikan_sedangs` table's `nama_pendidikan_sedangs` field is limited to 100 characters
+
+2. **UpdateDropdownValuesSeeder**
+   - Updates or adds additional values to reference tables
+   - Used for maintaining reference data consistency
+
+3. **OperatorAccountsSeeder**
+   - Creates default operator accounts (operator1-operator10)
+   - Generates random secure passwords
+   - Saves credentials to `storage/app/operator-credentials.txt`
+
+To run all seeders:
+```bash
+php artisan db:seed
+```
+
+To run a specific seeder:
+```bash
+php artisan db:seed --class=ReferenceTablesSeeder
+```
+
 ## Security Considerations
 
 See [SECURITY_POLICY.md](./SECURITY_POLICY.md) for complete security implementation details.
+
+### HTTP Protocol Support
+
+The application has been configured to support both HTTP and HTTPS protocols in production:
+
+1. **Configuration Options**
+   - `FORCE_HTTPS` environment variable (defaults to `true`)
+   - Controls whether strict HTTPS-only security features are enabled
+
+2. **Conditional Security Headers**
+   - HSTS headers are only applied when using HTTPS
+   - Other security headers are applied regardless of protocol
+
+3. **Cookie Security**
+   - Session cookies' `secure` flag is tied to the `FORCE_HTTPS` setting
+   - HTTP-only cookies are always enabled for security
+
+4. **Implementation Details**
+   - `SecureHeaders` middleware conditions HTTPS-specific headers based on the request protocol
+   - Session configuration adapts based on environment variables
+   - See [SECURE_DEPLOYMENT_GUIDE.md](./SECURE_DEPLOYMENT_GUIDE.md) for detailed deployment instructions
+
+### Security Recommendations
+
+While HTTP support is available, we strongly recommend:
+- Using HTTPS in any environment handling sensitive data
+- Limiting HTTP deployments to internal networks with additional security controls
+- Implementing network-level security when HTTPS cannot be used
 
 ## Backup and Recovery
 
@@ -226,6 +292,10 @@ The application implements:
 - Application errors are logged to `storage/logs/laravel.log`
 - Security events are logged with appropriate severity levels
 - Suspicious activities trigger alerts
+- Audit logs track user actions in the `audit_logs` table (added May 14, 2025)
+  - Records user operations on sensitive data
+  - Maintains compliance with data protection regulations
+  - Provides accountability for all data modifications
 
 ## Development Workflow
 
@@ -237,6 +307,48 @@ The application implements:
 6. Submit pull request
 7. Code review
 8. Merge to main branch
+
+## Running the Application
+
+### Development Environment
+
+For local development:
+
+```bash
+# Install PHP dependencies
+composer install
+
+# Install JavaScript dependencies
+npm install
+
+# Build assets
+npm run build
+
+# Set up environment
+cp .env.example .env
+php artisan key:generate
+
+# Set up database
+php artisan migrate
+php artisan db:seed
+
+# Start the development server
+php artisan serve
+```
+
+### Troubleshooting Common Issues
+
+1. **Database Seeder Issues**
+   - If you encounter "String data, right truncated" errors during seeding, check the field lengths in your migration files and ensure they can accommodate the data being seeded.
+   - For example, the `pendidikan_sedangs` table's `nama_pendidikan_sedangs` field must be at least 100 characters to fit all seed data.
+
+2. **Permission Issues**
+   - Ensure the `storage` and `bootstrap/cache` directories are writable by the web server
+   - Run `chmod -R 775 storage bootstrap/cache` if needed
+
+3. **File Upload Issues**
+   - Check storage disk configuration in `config/filesystems.php`
+   - Verify symlinks with `php artisan storage:link`
 
 ## Deployment
 
