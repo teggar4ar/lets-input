@@ -48,8 +48,8 @@ class SecureHeaders
             $response->headers->set($headerName, $headerValue);
         }
 
-        // Only add HTTPS-specific headers if the request is secure
-        if ($request->secure() && config('app.env') === 'production' && config('app.force_https', true)) {
+        // Only add HTTPS-specific headers if the request is secure and force_https is enabled
+        if ($request->secure() && config('app.env') === 'production' && config('app.force_https', false)) {
             foreach ($this->httpsOnlyHeaders as $headerName => $headerValue) {
                 $response->headers->set($headerName, $headerValue);
             }

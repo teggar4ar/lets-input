@@ -25,8 +25,8 @@ class AppServiceProvider extends ServiceProvider
         // Fix for MySQL "Specified key was too long" error
         Schema::defaultStringLength(191);
 
-        // Force HTTPS in production
-        if (config('app.env') === 'production') {
+        // Only force HTTPS if specifically configured
+        if (config('app.env') === 'production' && config('app.force_https', false)) {
             URL::forceScheme('https');
             Config::set('session.secure', true);
         }

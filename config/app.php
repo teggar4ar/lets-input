@@ -66,7 +66,7 @@ return [
     |
     */
 
-    'force_https' => (bool) env('FORCE_HTTPS', true),
+    'force_https' => (bool) env('FORCE_HTTPS', false),
 
     /*
     |--------------------------------------------------------------------------
