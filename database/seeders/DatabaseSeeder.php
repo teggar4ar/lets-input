@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             ReferenceTablesSeeder::class,
             UpdateDropdownValuesSeeder::class,
             OperatorAccountsSeeder::class,
+            PendudukSeeder::class,
         ]);
     }
 }

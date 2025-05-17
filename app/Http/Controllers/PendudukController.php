@@ -24,10 +24,95 @@ class PendudukController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $penduduks = Penduduk::with(['alamat', 'agama', 'pendidikan', 'pekerjaan'])->paginate(10);
-        return view('penduduk.index', compact('penduduks'));
+        $query = Penduduk::with(['alamat', 'agama', 'pendidikan', 'pekerjaan', 'statKawin', 'statDasar', 'statHubKeluarga']);
+
+        // Search functionality
+        if ($request->filled('search')) {
+            $searchTerm = $request->search;
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('nama', 'like', "%{$searchTerm}%")
+                    ->orWhere('nik', 'like', "%{$searchTerm}%")
+                    ->orWhere('no_kk', 'like', "%{$searchTerm}%")
+                    ->orWhereHas('alamat', function ($q2) use ($searchTerm) {
+                        $q2->where('nama_alamat', 'like', "%{$searchTerm}%")
+                            ->orWhere('dusun', 'like', "%{$searchTerm}%");
+                    });
+            });
+        }
+
+        // Filters
+        if ($request->filled('jk')) {
+            $query->where('jk', $request->jk);
+        }
+
+        if ($request->filled('agama_id')) {
+            $query->where('agamas_id', $request->agama_id);
+        }
+
+        if ($request->filled('pekerjaan_id')) {
+            $query->where('pekerjaans_id', $request->pekerjaan_id);
+        }
+
+        if ($request->filled('pendidikan_id')) {
+            $query->where('pendidikans_id', $request->pendidikan_id);
+        }
+
+        if ($request->filled('stat_kawin_id')) {
+            $query->where('stat_kawins_id', $request->stat_kawin_id);
+        }
+
+        if ($request->filled('stat_hub_keluarga_id')) {
+            $query->where('stat_hub_keluargas_id', $request->stat_hub_keluarga_id);
+        }
+
+        if ($request->filled('stat_dasar_id')) {
+            $query->where('stat_dasars_id', $request->stat_dasar_id);
+        }
+
+        // Age range filter
+        if ($request->filled('umur_dari') || $request->filled('umur_sampai')) {
+            $today = now();
+
+            if ($request->filled('umur_dari')) {
+                $maxDate = $today->copy()->subYears($request->umur_dari);
+                $query->where('tgl_lahir', '<=', $maxDate->format('Y-m-d'));
+            }
+
+            if ($request->filled('umur_sampai')) {
+                $minDate = $today->copy()->subYears($request->umur_sampai + 1)->addDay();
+                $query->where('tgl_lahir', '>=', $minDate->format('Y-m-d'));
+            }
+        }
+
+        // Sort functionality
+        $sortField = $request->sort_by ?? 'updated_at';
+        $sortDirection = $request->sort_direction ?? 'desc';
+        $query->orderBy($sortField, $sortDirection);
+
+        // Get the per page value from the request or use default value
+        $perPage = $request->per_page ?? 10;
+
+        $penduduks = $query->paginate($perPage)->withQueryString();
+
+        // Get all reference data for filters
+        $agamas = Agama::all();
+        $pendidikans = Pendidikan::all();
+        $pekerjaans = Pekerjaan::all();
+        $statKawins = StatKawin::all();
+        $statHubKeluargas = StatHubKeluarga::all();
+        $statDasars = StatDasar::all();
+
+        return view('penduduk.index', compact(
+            'penduduks',
+            'agamas',
+            'pendidikans',
+            'pekerjaans',
+            'statKawins',
+            'statHubKeluargas',
+            'statDasars'
+        ));
     }
 
     /**

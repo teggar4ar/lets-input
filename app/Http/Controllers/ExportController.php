@@ -11,8 +11,17 @@ class ExportController extends Controller
     /**
      * Export penduduk data to Excel
      */
-    public function exportPenduduk()
+    public function exportPenduduk(Request $request)
     {
-        return Excel::download(new PendudukExport, 'data-penduduk.xlsx');
+        $filename = 'data-penduduk';
+
+        // Add filter information to filename if filters are applied
+        if ($request->anyFilled(['search', 'jk', 'agama_id', 'pekerjaan_id', 'pendidikan_id', 'stat_kawin_id', 'stat_dasar_id'])) {
+            $filename .= '-filtered';
+        }
+
+        $filename .= '-' . date('Y-m-d') . '.xlsx';
+
+        return Excel::download(new PendudukExport($request), $filename);
     }
 }

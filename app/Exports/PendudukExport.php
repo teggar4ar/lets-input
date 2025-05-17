@@ -11,12 +11,22 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class PendudukExport implements FromCollection, WithHeadings, WithMapping, WithColumnFormatting
 {
+    protected $request;
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     */
+    public function __construct($request = null)
+    {
+        $this->request = $request;
+    }
+
     /**
      * @return \Illuminate\Support\Collection
      */
     public function collection()
     {
-        return Penduduk::with([
+        $query = Penduduk::with([
             'alamat',
             'agama',
             'pendidikan',
@@ -30,7 +40,75 @@ class PendudukExport implements FromCollection, WithHeadings, WithMapping, WithC
             'statRekam',
             'statDasar',
             'asuransi'
-        ])->get();
+        ]);
+
+        // Apply filters if request is provided
+        if ($this->request) {
+            // Search functionality
+            if ($this->request->filled('search')) {
+                $searchTerm = $this->request->search;
+                $query->where(function ($q) use ($searchTerm) {
+                    $q->where('nama', 'like', "%{$searchTerm}%")
+                        ->orWhere('nik', 'like', "%{$searchTerm}%")
+                        ->orWhere('no_kk', 'like', "%{$searchTerm}%")
+                        ->orWhereHas('alamat', function ($q2) use ($searchTerm) {
+                            $q2->where('nama_alamat', 'like', "%{$searchTerm}%")
+                                ->orWhere('dusun', 'like', "%{$searchTerm}%");
+                        });
+                });
+            }
+
+            // Filters
+            if ($this->request->filled('jk')) {
+                $query->where('jk', $this->request->jk);
+            }
+
+            if ($this->request->filled('agama_id')) {
+                $query->where('agamas_id', $this->request->agama_id);
+            }
+
+            if ($this->request->filled('pekerjaan_id')) {
+                $query->where('pekerjaans_id', $this->request->pekerjaan_id);
+            }
+
+            if ($this->request->filled('pendidikan_id')) {
+                $query->where('pendidikans_id', $this->request->pendidikan_id);
+            }
+
+            if ($this->request->filled('stat_kawin_id')) {
+                $query->where('stat_kawins_id', $this->request->stat_kawin_id);
+            }
+
+            if ($this->request->filled('stat_hub_keluarga_id')) {
+                $query->where('stat_hub_keluargas_id', $this->request->stat_hub_keluarga_id);
+            }
+
+            if ($this->request->filled('stat_dasar_id')) {
+                $query->where('stat_dasars_id', $this->request->stat_dasar_id);
+            }
+
+            // Age range filter
+            if ($this->request->filled('umur_dari') || $this->request->filled('umur_sampai')) {
+                $today = now();
+
+                if ($this->request->filled('umur_dari')) {
+                    $maxDate = $today->copy()->subYears($this->request->umur_dari);
+                    $query->where('tgl_lahir', '<=', $maxDate->format('Y-m-d'));
+                }
+
+                if ($this->request->filled('umur_sampai')) {
+                    $minDate = $today->copy()->subYears($this->request->umur_sampai + 1)->addDay();
+                    $query->where('tgl_lahir', '>=', $minDate->format('Y-m-d'));
+                }
+            }
+
+            // Sort functionality
+            $sortField = $this->request->sort_by ?? 'updated_at';
+            $sortDirection = $this->request->sort_direction ?? 'desc';
+            $query->orderBy($sortField, $sortDirection);
+        }
+
+        return $query->get();
     }
 
     /**
