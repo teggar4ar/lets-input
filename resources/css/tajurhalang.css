@@ -1,0 +1,128 @@
+/* Tajurhalang Village Custom Styles */
+.tajurhalang-bg-primary {
+    background-color: #006940 !important; /* Darker Green from Tajurhalang emblem for better contrast */
+}
+
+.tajurhalang-bg-secondary {
+    background-color: #FFDE00 !important; /* Yellow from Tajurhalang emblem */
+}
+
+.tajurhalang-text-primary {
+    color: #006940 !important; /* Darker green for better text visibility */
+}
+
+.tajurhalang-text-secondary {
+    color: #856b00 !important; /* Darker yellow for better text contrast */
+}
+
+.tajurhalang-border-primary {
+    border-color: #006940 !important;
+}
+
+.tajurhalang-border-secondary {
+    border-color: #FFDE00 !important;
+}
+
+.tajurhalang-shadow {
+    box-shadow: 0 4px 6px -1px rgba(0, 105, 64, 0.1), 0 2px 4px -1px rgba(0, 105, 64, 0.06);
+}
+
+.tajurhalang-hover:hover {
+    background-color: #005733 !important;
+}
+
+.tajurhalang-header {
+    background: linear-gradient(135deg, #006940 0%, #005733 100%);
+    color: white;
+}
+
+.tajurhalang-footer {
+    background-color: #006940;
+    color: white;
+    padding: 1.5rem 0;
+    margin-top: 2rem;
+}
+
+/* Custom button styles */
+.tajurhalang-btn {
+    background-color: #006940;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.tajurhalang-btn:hover {
+    background-color: #005733;
+}
+
+.tajurhalang-btn-secondary {
+    background-color: #FFDE00;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.tajurhalang-btn-secondary:hover {
+    background-color: #e6c800;
+}
+
+/* Action button styles for data tables */
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    min-height: 32px;
+    padding: 0.375rem;
+    border-radius: 0.25rem;
+    transition: all 0.15s ease;
+    color: white;
+    font-weight: 500;
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.action-btn svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.action-btn:focus {
+    outline: 2px solid rgba(0,0,0,0.15);
+    outline-offset: 2px;
+}
+
+.action-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+
+.action-btn-view {
+    background-color: #2563eb; /* blue-600 */
+}
+
+.action-btn-view:hover {
+    background-color: #1d4ed8; /* blue-700 */
+}
+
+.action-btn-edit {
+    background-color: #f59e0b; /* amber-500 */
+}
+
+.action-btn-edit:hover {
+    background-color: #d97706; /* amber-600 */
+}
+
+.action-btn-add {
+    background-color: #059669; /* emerald-600 */
+}
+
+.action-btn-add:hover {
+    background-color: #047857; /* emerald-700 */
+}
+
+.action-btn-delete {
+    background-color: #dc2626; /* red-600 */
+}
+
+.action-btn-delete:hover {
+    background-color: #b91c1c; /* red-700 */
+}

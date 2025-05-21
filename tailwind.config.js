@@ -14,6 +14,18 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                tajurhalang: {
+                    green: {
+                        DEFAULT: '#008751',
+                        dark: '#006d41',
+                    },
+                    yellow: {
+                        DEFAULT: '#FFDE00',
+                        dark: '#e6c800',
+                    },
+                },
+            },
         },
     },
 

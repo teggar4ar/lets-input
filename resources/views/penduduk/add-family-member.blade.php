@@ -1,10 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 class="font-semibold text-xl text-white leading-tight">
                 {{ __('Tambah Anggota Keluarga') }}
             </h2>
-            <a href="{{ route('penduduk.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+            <a href="{{ route('penduduk.index') }}" class="bg-yellow-500 hover:bg-yellow-600 text-gray-800 font-bold py-2 px-4 shadow-md rounded">
                 Kembali
             </a>
         </div>
