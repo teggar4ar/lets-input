@@ -22,7 +22,7 @@ class UpdatePendudukRequest extends FormRequest
         $pendudukId = $this->route('penduduk');
 
         return [
-            'nik' => "required|string|max:16|unique:penduduks,nik,{$pendudukId}",
+            'nik' => "required|string|digits:16|unique:penduduks,nik,{$pendudukId}",
             'nama' => 'required|string|max:255',
             'jk' => 'required|in:laki-laki,perempuan',
             'tmp_lahir' => 'required|string|max:100',
@@ -35,7 +35,7 @@ class UpdatePendudukRequest extends FormRequest
 
             // Optional fields
             'pendidikan_sedangs_id' => 'nullable|exists:pendidikan_sedangs,id',
-            'kewarganegaraan' => 'nullable|string|max:10',
+            'kewarganegaraan' => 'nullable|string|max:50',
             'ayah_nik' => 'nullable|string|max:16',
             'ayah_nama' => 'nullable|string|max:255',
             'ibu_nik' => 'nullable|string|max:16',
@@ -76,7 +76,7 @@ class UpdatePendudukRequest extends FormRequest
         return [
             'nik.required' => 'NIK wajib diisi',
             'nik.unique' => 'NIK sudah terdaftar',
-            'nik.max' => 'NIK maksimal 16 karakter',
+            'nik.digits' => 'NIK harus terdiri dari 16 digit',
             'nama.required' => 'Nama wajib diisi',
             'nama.max' => 'Nama maksimal 255 karakter',
             'jk.required' => 'Jenis kelamin wajib dipilih',

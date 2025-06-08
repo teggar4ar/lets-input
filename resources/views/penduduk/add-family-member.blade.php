@@ -40,14 +40,14 @@
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                 <div>
-                                    <label for="nik" class="block text-sm font-medium text-gray-700">NIK</label>
+                                    <label for="nik" class="block text-sm font-medium text-gray-700">NIK<span class="text-red-500">*</span></label>
                                     <input type="text" name="nik" id="nik" class="mt-1 p-2 w-full border rounded-md @error('nik') border-red-500 @enderror" value="{{ old('nik') }}" required>
                                     @error('nik')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div>
-                                    <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
+                                    <label for="nama" class="block text-sm font-medium text-gray-700">Nama<span class="text-red-500">*</span></label>
                                     <input type="text" name="nama" id="nama" class="mt-1 p-2 w-full border rounded-md @error('nama') border-red-500 @enderror" value="{{ old('nama') }}" required>
                                     @error('nama')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -57,7 +57,7 @@
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                 <div>
-                                    <label for="jk" class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
+                                    <label for="jk" class="block text-sm font-medium text-gray-700">Jenis Kelamin<span class="text-red-500">*</span></label>
                                     <select name="jk" id="jk" class="mt-1 p-2 w-full border rounded-md @error('jk') border-red-500 @enderror" required>
                                         <option value="">Pilih Jenis Kelamin</option>
                                         <option value="laki-laki" {{ old('jk') == 'laki-laki' ? 'selected' : '' }}>Laki-laki</option>
@@ -68,7 +68,7 @@
                                     @enderror
                                 </div>
                                 <div>
-                                    <label for="tmp_lahir" class="block text-sm font-medium text-gray-700">Tempat Lahir</label>
+                                    <label for="tmp_lahir" class="block text-sm font-medium text-gray-700">Tempat Lahir<span class="text-red-500">*</span></label>
                                     <input type="text" name="tmp_lahir" id="tmp_lahir" class="mt-1 p-2 w-full border rounded-md @error('tmp_lahir') border-red-500 @enderror" value="{{ old('tmp_lahir') }}" required>
                                     @error('tmp_lahir')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -78,14 +78,14 @@
 
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                                 <div>
-                                    <label for="tgl_lahir" class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
+                                    <label for="tgl_lahir" class="block text-sm font-medium text-gray-700">Tanggal Lahir<span class="text-red-500">*</span></label>
                                     <input type="date" name="tgl_lahir" id="tgl_lahir" class="mt-1 p-2 w-full border rounded-md @error('tgl_lahir') border-red-500 @enderror" value="{{ old('tgl_lahir') }}" required>
                                     @error('tgl_lahir')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div>
-                                    <label for="agamas_id" class="block text-sm font-medium text-gray-700">Agama</label>
+                                    <label for="agamas_id" class="block text-sm font-medium text-gray-700">Agama<span class="text-red-500">*</span></label>
                                     <select name="agamas_id" id="agamas_id" class="mt-1 p-2 w-full border rounded-md @error('agamas_id') border-red-500 @enderror" required>
                                         <option value="">Pilih Agama</option>
                                         @foreach($agamas as $agama)
@@ -112,7 +112,7 @@
 
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                                 <div>
-                                    <label for="pendidikans_id" class="block text-sm font-medium text-gray-700">Pendidikan</label>
+                                    <label for="pendidikans_id" class="block text-sm font-medium text-gray-700">Pendidikan<span class="text-red-500">*</span></label>
                                     <select name="pendidikans_id" id="pendidikans_id" class="mt-1 p-2 w-full border rounded-md @error('pendidikans_id') border-red-500 @enderror" required>
                                         <option value="">Pilih Pendidikan</option>
                                         @foreach($pendidikans as $pendidikan)
@@ -136,7 +136,7 @@
                                     @enderror
                                 </div>
                                 <div>
-                                    <label for="pekerjaans_id" class="block text-sm font-medium text-gray-700">Pekerjaan</label>
+                                    <label for="pekerjaans_id" class="block text-sm font-medium text-gray-700">Pekerjaan<span class="text-red-500">*</span></label>
                                     <select name="pekerjaans_id" id="pekerjaans_id" class="mt-1 p-2 w-full border rounded-md @error('pekerjaans_id') border-red-500 @enderror" required>
                                         <option value="">Pilih Pekerjaan</option>
                                         @foreach($pekerjaans as $pekerjaan)
@@ -151,7 +151,7 @@
 
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                                 <div>
-                                    <label for="stat_kawins_id" class="block text-sm font-medium text-gray-700">Status Perkawinan</label>
+                                    <label for="stat_kawins_id" class="block text-sm font-medium text-gray-700">Status Perkawinan<span class="text-red-500">*</span></label>
                                     <select name="stat_kawins_id" id="stat_kawins_id" class="mt-1 p-2 w-full border rounded-md @error('stat_kawins_id') border-red-500 @enderror" required>
                                         <option value="">Pilih Status Perkawinan</option>
                                         @foreach($statKawins as $statKawin)
@@ -163,7 +163,7 @@
                                     @enderror
                                 </div>
                                 <div>
-                                    <label for="stat_hub_keluargas_id" class="block text-sm font-medium text-gray-700">Hubungan Keluarga</label>
+                                    <label for="stat_hub_keluargas_id" class="block text-sm font-medium text-gray-700">Hubungan Keluarga<span class="text-red-500">*</span></label>
                                     <select name="stat_hub_keluargas_id" id="stat_hub_keluargas_id" class="mt-1 p-2 w-full border rounded-md @error('stat_hub_keluargas_id') border-red-500 @enderror" required>
                                         <option value="">Pilih Hubungan Keluarga</option>
                                         @foreach($statHubKeluargas as $statHubKeluarga)
@@ -175,7 +175,7 @@
                                     @enderror
                                 </div>
                                 <div>
-                                    <label for="kewarganegaraan" class="block text-sm font-medium text-gray-700">Kewarganegaraan</label>
+                                    <label for="kewarganegaraan" class="block text-sm font-medium text-gray-700">Kewarganegaraan<span class="text-red-500">*</span></label>
                                     <select name="kewarganegaraan" id="kewarganegaraan" class="mt-1 p-2 w-full border rounded-md @error('kewarganegaraan') border-red-500 @enderror" required>
                                         <option value="wni" {{ old('kewarganegaraan') == 'wni' ? 'selected' : '' }}>WNI</option>
                                         <option value="wna" {{ old('kewarganegaraan') == 'wna' ? 'selected' : '' }}>WNA</option>
@@ -285,7 +285,7 @@
                                 </div>
 
                                 <div>
-                                    <label for="stat_dasars_id" class="block text-sm font-medium text-gray-700">Status Dasar</label>
+                                    <label for="stat_dasars_id" class="block text-sm font-medium text-gray-700">Status Dasar<span class="text-red-500">*</span></label>
                                     <select name="stat_dasars_id" id="stat_dasars_id" class="mt-1 p-2 w-full border rounded-md @error('stat_dasars_id') border-red-500 @enderror" required>
                                         @foreach($statDasars as $statDasar)
                                             <option value="{{ $statDasar->id }}" {{ $statDasar->nama_stat_dasars == 'HIDUP' ? 'selected' : '' }}>{{ $statDasar->nama_stat_dasars }}</option>

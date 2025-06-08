@@ -20,9 +20,9 @@ class StoreFamilyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'no_kk' => 'required|string|max:16',
+            'no_kk' => 'required|string|digits:16',
             'family_members' => 'required|array|min:1',
-            'family_members.*.nik' => 'required|string|max:16|unique:penduduks,nik',
+            'family_members.*.nik' => 'required|string|digits:16|unique:penduduks,nik',
             'family_members.*.nama' => 'required|string|max:255',
             'family_members.*.jk' => 'required|in:laki-laki,perempuan',
             'family_members.*.tmp_lahir' => 'required|string|max:100',
@@ -46,9 +46,10 @@ class StoreFamilyRequest extends FormRequest
     {
         return [
             'no_kk.required' => 'Nomor KK wajib diisi',
-            'no_kk.max' => 'Nomor KK maksimal 16 karakter',
+            'no_kk.digits' => 'Nomor KK harus terdiri dari 16 digit',
             'family_members.required' => 'Minimal harus ada 1 anggota keluarga',
             'family_members.*.nik.required' => 'NIK wajib diisi',
+            'family_members.*.nik.digits' => 'NIK harus terdiri dari 16 digit',
             'family_members.*.nik.unique' => 'NIK sudah terdaftar',
             'family_members.*.nama.required' => 'Nama wajib diisi',
             'family_members.*.jk.required' => 'Jenis kelamin wajib dipilih',

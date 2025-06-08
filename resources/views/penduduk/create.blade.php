@@ -39,7 +39,7 @@
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                 <div>
-                                    <label for="no_kk" class="block text-sm font-medium text-gray-700">Nomor KK</label>
+                                    <label for="no_kk" class="block text-sm font-medium text-gray-700">Nomor KK <span class="text-red-500">*</span></label>
                                     <input type="text" name="no_kk" id="no_kk" class="mt-1 p-2 w-full border rounded-md @error('no_kk') border-red-500 @enderror" value="{{ old('no_kk') }}" required>
                                     @error('no_kk')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -48,7 +48,7 @@
                             </div>
 
                             <div class="mb-4">
-                                <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat</label>
+                                <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat<span class="text-red-500">*</span></label>
                                 <textarea name="alamat" id="alamat" rows="2" class="mt-1 p-2 w-full border rounded-md @error('alamat') border-red-500 @enderror" required>{{ old('alamat') }}</textarea>
                                 @error('alamat')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -57,7 +57,7 @@
 
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div>
-                                    <label for="dusun" class="block text-sm font-medium text-gray-700">Dusun</label>
+                                    <label for="dusun" class="block text-sm font-medium text-gray-700">Dusun<span class="text-red-500">*</span></label>
                                     <select name="dusun" id="dusun" class="mt-1 p-2 w-full border rounded-md @error('dusun') border-red-500 @enderror" required>
                                         @foreach(['001', '002', '003', '004', '005', '006', '007'] as $dusun)
                                             <option value="{{ $dusun }}" {{ old('dusun') == $dusun ? 'selected' : '' }}>{{ $dusun }}</option>
@@ -69,7 +69,7 @@
                                 </div>
 
                                 <div>
-                                    <label for="no_rt" class="block text-sm font-medium text-gray-700">RT</label>
+                                    <label for="no_rt" class="block text-sm font-medium text-gray-700">RT<span class="text-red-500">*</span></label>
                                     <input type="number" name="no_rt" id="no_rt" class="mt-1 p-2 w-full border rounded-md @error('no_rt') border-red-500 @enderror" value="{{ old('no_rt') }}" required>
                                     @error('no_rt')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -77,7 +77,7 @@
                                 </div>
 
                                 <div>
-                                    <label for="no_rw" class="block text-sm font-medium text-gray-700">RW</label>
+                                    <label for="no_rw" class="block text-sm font-medium text-gray-700">RW<span class="text-red-500">*</span></label>
                                     <input type="number" name="no_rw" id="no_rw" class="mt-1 p-2 w-full border rounded-md @error('no_rw') border-red-500 @enderror" value="{{ old('no_rw') }}" required>
                                     @error('no_rw')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -100,147 +100,198 @@
 
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                                     <div>
-                                        <label for="family_members[0][nik]" class="block text-sm font-medium text-gray-700">NIK</label>
-                                        <input type="text" name="family_members[0][nik]" class="mt-1 p-2 w-full border rounded-md" required>
+                                        <label for="family_members[0][nik]" class="block text-sm font-medium text-gray-700">NIK<span class="text-red-500">*</span></label>
+                                        <input type="text" name="family_members[0][nik]" class="mt-1 p-2 w-full border rounded-md @error('family_members.0.nik') border-red-500 @enderror" value="{{ old('family_members.0.nik') }}" required>
+                                        @error('family_members.0.nik')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div>
-                                        <label for="family_members[0][nama]" class="block text-sm font-medium text-gray-700">Nama</label>
-                                        <input type="text" name="family_members[0][nama]" class="mt-1 p-2 w-full border rounded-md" required>
+                                        <label for="family_members[0][nama]" class="block text-sm font-medium text-gray-700">Nama<span class="text-red-500">*</span></label>
+                                        <input type="text" name="family_members[0][nama]" class="mt-1 p-2 w-full border rounded-md @error('family_members.0.nama') border-red-500 @enderror" value="{{ old('family_members.0.nama') }}" required>
+                                        @error('family_members.0.nama')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div>
-                                        <label for="family_members[0][jk]" class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
-                                        <select name="family_members[0][jk]" class="mt-1 p-2 w-full border rounded-md" required>
+                                        <label for="family_members[0][jk]" class="block text-sm font-medium text-gray-700">Jenis Kelamin<span class="text-red-500">*</span></label>
+                                        <select name="family_members[0][jk]" class="mt-1 p-2 w-full border rounded-md @error('family_members.0.jk') border-red-500 @enderror" required>
                                             <option value="">Pilih Jenis Kelamin</option>
-                                            <option value="laki-laki">Laki-laki</option>
-                                            <option value="perempuan">Perempuan</option>
+                                            <option value="laki-laki" {{ old('family_members.0.jk') == 'laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                                            <option value="perempuan" {{ old('family_members.0.jk') == 'perempuan' ? 'selected' : '' }}>Perempuan</option>
                                         </select>
+                                        @error('family_members.0.jk')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                                     <div>
-                                        <label for="family_members[0][tmp_lahir]" class="block text-sm font-medium text-gray-700">Tempat Lahir</label>
-                                        <input type="text" name="family_members[0][tmp_lahir]" class="mt-1 p-2 w-full border rounded-md" required>
+                                        <label for="family_members[0][tmp_lahir]" class="block text-sm font-medium text-gray-700">Tempat Lahir<span class="text-red-500">*</span></label>
+                                        <input type="text" name="family_members[0][tmp_lahir]" class="mt-1 p-2 w-full border rounded-md @error('family_members.0.tmp_lahir') border-red-500 @enderror" value="{{ old('family_members.0.tmp_lahir') }}" required>
+                                        @error('family_members.0.tmp_lahir')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div>
-                                        <label for="family_members[0][tgl_lahir]" class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
-                                        <input type="date" name="family_members[0][tgl_lahir]" class="mt-1 p-2 w-full border rounded-md" required>
+                                        <label for="family_members[0][tgl_lahir]" class="block text-sm font-medium text-gray-700">Tanggal Lahir<span class="text-red-500">*</span></label>
+                                        <input type="date" name="family_members[0][tgl_lahir]" class="mt-1 p-2 w-full border rounded-md @error('family_members.0.tgl_lahir') border-red-500 @enderror" value="{{ old('family_members.0.tgl_lahir') }}" required>
+                                        @error('family_members.0.tgl_lahir')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div>
-                                        <label for="family_members[0][agamas_id]" class="block text-sm font-medium text-gray-700">Agama</label>
-                                        <select name="family_members[0][agamas_id]" class="mt-1 p-2 w-full border rounded-md" required>
+                                        <label for="family_members[0][agamas_id]" class="block text-sm font-medium text-gray-700">Agama<span class="text-red-500">*</span></label>
+                                        <select name="family_members[0][agamas_id]" class="mt-1 p-2 w-full border rounded-md @error('family_members.0.agamas_id') border-red-500 @enderror" required>
                                             <option value="">Pilih Agama</option>
                                             @foreach($agamas as $agama)
-                                                <option value="{{ $agama->id }}">{{ $agama->nama_agama }}</option>
+                                                <option value="{{ $agama->id }}" {{ old('family_members.0.agamas_id') == $agama->id ? 'selected' : '' }}>{{ $agama->nama_agama }}</option>
                                             @endforeach
                                         </select>
+                                        @error('family_members.0.agamas_id')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                                     <div>
-                                        <label for="family_members[0][pendidikans_id]" class="block text-sm font-medium text-gray-700">Pendidikan</label>
-                                        <select name="family_members[0][pendidikans_id]" class="mt-1 p-2 w-full border rounded-md" required>
+                                        <label for="family_members[0][pendidikans_id]" class="block text-sm font-medium text-gray-700">Pendidikan<span class="text-red-500">*</span></label>
+                                        <select name="family_members[0][pendidikans_id]" class="mt-1 p-2 w-full border rounded-md @error('family_members.0.pendidikans_id') border-red-500 @enderror" required>
                                             <option value="">Pilih Pendidikan</option>
                                             @foreach($pendidikans as $pendidikan)
-                                                <option value="{{ $pendidikan->id }}">{{ $pendidikan->nama_pendidikan }}</option>
+                                                <option value="{{ $pendidikan->id }}" {{ old('family_members.0.pendidikans_id') == $pendidikan->id ? 'selected' : '' }}>{{ $pendidikan->nama_pendidikan }}</option>
                                             @endforeach
                                         </select>
+                                        @error('family_members.0.pendidikans_id')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div>
                                         <label for="family_members[0][pendidikan_sedangs_id]" class="block text-sm font-medium text-gray-700">Pendidikan Sedang</label>
-                                        <select name="family_members[0][pendidikan_sedangs_id]" class="mt-1 p-2 w-full border rounded-md">
+                                        <select name="family_members[0][pendidikan_sedangs_id]" class="mt-1 p-2 w-full border rounded-md @error('family_members.0.pendidikan_sedangs_id') border-red-500 @enderror">
                                             <option value="">Pilih Pendidikan Sedang</option>
                                             @foreach($pendidikanSedangs as $pendidikanSedang)
-                                                <option value="{{ $pendidikanSedang->id }}">{{ $pendidikanSedang->nama_pendidikan_sedangs }}</option>
+                                                <option value="{{ $pendidikanSedang->id }}" {{ old('family_members.0.pendidikan_sedangs_id') == $pendidikanSedang->id ? 'selected' : '' }}>{{ $pendidikanSedang->nama_pendidikan_sedangs }}</option>
                                             @endforeach
                                         </select>
+                                        @error('family_members.0.pendidikan_sedangs_id')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div>
-                                        <label for="family_members[0][pekerjaans_id]" class="block text-sm font-medium text-gray-700">Pekerjaan</label>
-                                        <select name="family_members[0][pekerjaans_id]" class="mt-1 p-2 w-full border rounded-md" required>
+                                        <label for="family_members[0][pekerjaans_id]" class="block text-sm font-medium text-gray-700">Pekerjaan<span class="text-red-500">*</span></label>
+                                        <select name="family_members[0][pekerjaans_id]" class="mt-1 p-2 w-full border rounded-md @error('family_members.0.pekerjaans_id') border-red-500 @enderror" required>
                                             <option value="">Pilih Pekerjaan</option>
                                             @foreach($pekerjaans as $pekerjaan)
-                                                <option value="{{ $pekerjaan->id }}">{{ $pekerjaan->nama_pekerjaan }}</option>
+                                                <option value="{{ $pekerjaan->id }}" {{ old('family_members.0.pekerjaans_id') == $pekerjaan->id ? 'selected' : '' }}>{{ $pekerjaan->nama_pekerjaan }}</option>
                                             @endforeach
                                         </select>
+                                        @error('family_members.0.pekerjaans_id')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                                     <div>
-                                        <label for="family_members[0][stat_kawins_id]" class="block text-sm font-medium text-gray-700">Status Perkawinan</label>
-                                        <select name="family_members[0][stat_kawins_id]" class="mt-1 p-2 w-full border rounded-md" required>
+                                        <label for="family_members[0][stat_kawins_id]" class="block text-sm font-medium text-gray-700">Status Perkawinan<span class="text-red-500">*</span></label>
+                                        <select name="family_members[0][stat_kawins_id]" class="mt-1 p-2 w-full border rounded-md @error('family_members.0.stat_kawins_id') border-red-500 @enderror" required>
                                             <option value="">Pilih Status Perkawinan</option>
                                             @foreach($statKawins as $statKawin)
-                                                <option value="{{ $statKawin->id }}">{{ $statKawin->nama_stat_kawins }}</option>
+                                                <option value="{{ $statKawin->id }}" {{ old('family_members.0.stat_kawins_id') == $statKawin->id ? 'selected' : '' }}>{{ $statKawin->nama_stat_kawins }}</option>
                                             @endforeach
                                         </select>
+                                        @error('family_members.0.stat_kawins_id')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div>
-                                        <label for="family_members[0][stat_hub_keluargas_id]" class="block text-sm font-medium text-gray-700">Hubungan Keluarga</label>
-                                        <select name="family_members[0][stat_hub_keluargas_id]" class="mt-1 p-2 w-full border rounded-md" required>
+                                        <label for="family_members[0][stat_hub_keluargas_id]" class="block text-sm font-medium text-gray-700">Hubungan Keluarga<span class="text-red-500">*</span></label>
+                                        <select name="family_members[0][stat_hub_keluargas_id]" class="mt-1 p-2 w-full border rounded-md @error('family_members.0.stat_hub_keluargas_id') border-red-500 @enderror" required>
                                             <option value="">Pilih Hubungan Keluarga</option>
                                             @foreach($statHubKeluargas as $statHubKeluarga)
-                                                <option value="{{ $statHubKeluarga->id }}">{{ $statHubKeluarga->nama_hub_keluarga }}</option>
+                                                <option value="{{ $statHubKeluarga->id }}" {{ old('family_members.0.stat_hub_keluargas_id') == $statHubKeluarga->id ? 'selected' : '' }}>{{ $statHubKeluarga->nama_hub_keluarga }}</option>
                                             @endforeach
                                         </select>
+                                        @error('family_members.0.stat_hub_keluargas_id')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div>
-                                        <label for="family_members[0][kewarganegaraan]" class="block text-sm font-medium text-gray-700">Kewarganegaraan</label>
-                                        <select name="family_members[0][kewarganegaraan]" class="mt-1 p-2 w-full border rounded-md" required>
-                                            <option value="wni">WNI</option>
-                                            <option value="wna">WNA</option>
-                                            <option value="dua kewarganegaraan">Dua Kewarganegaraan</option>
+                                        <label for="family_members[0][kewarganegaraan]" class="block text-sm font-medium text-gray-700">Kewarganegaraan<span class="text-red-500">*</span></label>
+                                        <select name="family_members[0][kewarganegaraan]" class="mt-1 p-2 w-full border rounded-md @error('family_members.0.kewarganegaraan') border-red-500 @enderror" required>
+                                            <option value="wni" {{ old('family_members.0.kewarganegaraan', 'wni') == 'wni' ? 'selected' : '' }}>WNI</option>
+                                            <option value="wna" {{ old('family_members.0.kewarganegaraan') == 'wna' ? 'selected' : '' }}>WNA</option>
+                                            <option value="dua kewarganegaraan" {{ old('family_members.0.kewarganegaraan') == 'dua kewarganegaraan' ? 'selected' : '' }}>Dua Kewarganegaraan</option>
                                         </select>
+                                        @error('family_members.0.kewarganegaraan')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                                     <div>
                                         <label for="family_members[0][ayah_nama]" class="block text-sm font-medium text-gray-700">Nama Ayah</label>
-                                        <input type="text" name="family_members[0][ayah_nama]" class="mt-1 p-2 w-full border rounded-md">
+                                        <input type="text" name="family_members[0][ayah_nama]" class="mt-1 p-2 w-full border rounded-md @error('family_members.0.ayah_nama') border-red-500 @enderror" value="{{ old('family_members.0.ayah_nama') }}">
+                                        @error('family_members.0.ayah_nama')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div>
                                         <label for="family_members[0][ibu_nama]" class="block text-sm font-medium text-gray-700">Nama Ibu</label>
-                                        <input type="text" name="family_members[0][ibu_nama]" class="mt-1 p-2 w-full border rounded-md">
+                                        <input type="text" name="family_members[0][ibu_nama]" class="mt-1 p-2 w-full border rounded-md @error('family_members.0.ibu_nama') border-red-500 @enderror" value="{{ old('family_members.0.ibu_nama') }}">
+                                        @error('family_members.0.ibu_nama')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div>
                                         <label for="family_members[0][gol_darahs_id]" class="block text-sm font-medium text-gray-700">Golongan Darah</label>
-                                        <select name="family_members[0][gol_darahs_id]" class="mt-1 p-2 w-full border rounded-md">
+                                        <select name="family_members[0][gol_darahs_id]" class="mt-1 p-2 w-full border rounded-md @error('family_members.0.gol_darahs_id') border-red-500 @enderror">
                                             <option value="">Pilih Golongan Darah</option>
                                             @foreach($golDarahs as $golDarah)
-                                                <option value="{{ $golDarah->id }}">{{ $golDarah->nama_gol_darah }}</option>
+                                                <option value="{{ $golDarah->id }}" {{ old('family_members.0.gol_darahs_id') == $golDarah->id ? 'selected' : '' }}>{{ $golDarah->nama_gol_darah }}</option>
                                             @endforeach
                                         </select>
+                                        @error('family_members.0.gol_darahs_id')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                                     <div>
-                                        <label for="family_members[0][stat_dasars_id]" class="block text-sm font-medium text-gray-700">Status Dasar</label>
-                                        <select name="family_members[0][stat_dasars_id]" class="mt-1 p-2 w-full border rounded-md" required>
+                                        <label for="family_members[0][stat_dasars_id]" class="block text-sm font-medium text-gray-700">Status Dasar<span class="text-red-500">*</span></label>
+                                        <select name="family_members[0][stat_dasars_id]" class="mt-1 p-2 w-full border rounded-md @error('family_members.0.stat_dasars_id') border-red-500 @enderror" required>
                                             @foreach($statDasars as $statDasar)
-                                                <option value="{{ $statDasar->id }}" {{ $statDasar->nama_stat_dasars == 'HIDUP' ? 'selected' : '' }}>{{ $statDasar->nama_stat_dasars }}</option>
+                                                <option value="{{ $statDasar->id }}" {{ old('family_members.0.stat_dasars_id', ($statDasar->nama_stat_dasars == 'HIDUP' ? $statDasar->id : '')) == $statDasar->id ? 'selected' : '' }}>{{ $statDasar->nama_stat_dasars }}</option>
                                             @endforeach
                                         </select>
+                                        @error('family_members.0.stat_dasars_id')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div>
                                         <label for="family_members[0][asuransis_id]" class="block text-sm font-medium text-gray-700">Asuransi</label>
-                                        <select name="family_members[0][asuransis_id]" id="family_members[0][asuransis_id]" class="mt-1 p-2 w-full border rounded-md">
+                                        <select name="family_members[0][asuransis_id]" class="mt-1 p-2 w-full border rounded-md @error('family_members.0.asuransis_id') border-red-500 @enderror">
                                             <option value="">Pilih Asuransi</option>
                                             @foreach($asuransis as $asuransi)
-                                                <option value="{{ $asuransi->id }}">{{ $asuransi->nama_asuransi }}</option>
+                                                <option value="{{ $asuransi->id }}" {{ old('family_members.0.asuransis_id') == $asuransi->id ? 'selected' : '' }}>{{ $asuransi->nama_asuransi }}</option>
                                             @endforeach
                                         </select>
+                                        @error('family_members.0.asuransis_id')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div class="flex items-center">
                                         <div class="flex items-center mr-4 mt-6">
-                                            <input type="checkbox" name="family_members[0][ktp_el]" id="family_members[0][ktp_el]" class="mr-2">
+                                            <input type="checkbox" name="family_members[0][ktp_el]" id="family_members[0][ktp_el]" class="mr-2" {{ old('family_members.0.ktp_el') ? 'checked' : '' }}>
                                             <label for="family_members[0][ktp_el]" class="text-sm font-medium text-gray-700">KTP Elektronik</label>
                                         </div>
                                         <div class="flex items-center mr-4 mt-6" id="hamilContainer0" style="display: none;">
-                                            <input type="checkbox" name="family_members[0][hamil]" id="family_members[0][hamil]" class="mr-2">
+                                            <input type="checkbox" name="family_members[0][hamil]" id="family_members[0][hamil]" class="mr-2" {{ old('family_members.0.hamil') ? 'checked' : '' }}>
                                             <label for="family_members[0][hamil]" class="text-sm font-medium text-gray-700">Hamil</label>
                                         </div>
                                     </div>
@@ -270,9 +321,28 @@
         let memberIndex = 0;
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize dynamic member indices based on old input
+            @if(old('family_members') && count(old('family_members')) > 1)
+                // Find the highest index in old family_members
+                @foreach(old('family_members') as $index => $member)
+                    @if($index > 0) // Skip the first member since it's already in the template
+                        addMember({{ $index }}, @json($member));
+                    @endif
+                @endforeach
+                memberIndex = {{ max(array_keys(old('family_members'))) }};
+            @endif
+
             // Show/hide hamil checkbox based on gender
             const genderSelects = document.querySelectorAll('select[name^="family_members"][name$="[jk]"]');
             genderSelects.forEach(select => {
+                // Apply initial state based on selected value
+                const index = select.name.match(/\[(\d+)\]/)[1];
+                const hamilContainer = document.getElementById(`hamilContainer${index}`);
+                if (hamilContainer) {
+                    hamilContainer.style.display = select.value === 'perempuan' ? 'block' : 'none';
+                }
+
+                // Add change event listener
                 select.addEventListener('change', function() {
                     const index = this.name.match(/\[(\d+)\]/)[1];
                     const hamilContainer = document.getElementById(`hamilContainer${index}`);
@@ -282,39 +352,73 @@
 
             // Add member button
             document.getElementById('addMemberBtn').addEventListener('click', function() {
-                addMember();
+                addMember(memberIndex + 1);
             });
         });
 
-        function addMember() {
-            memberIndex++;
+        function addMember(index = null, oldData = null) {
+            // Use provided index or increment
+            if (index === null) {
+                memberIndex++;
+                index = memberIndex;
+            } else {
+                memberIndex = Math.max(memberIndex, index);
+            }
+
             const template = document.querySelector('.family-member').cloneNode(true);
-            template.dataset.index = memberIndex;
+            template.dataset.index = index;
 
             // Update all input names and IDs with new index
             template.querySelectorAll('input, select').forEach(input => {
                 if (input.name) {
-                    input.name = input.name.replace(/\[0\]/, `[${memberIndex}]`);
-                    input.id = input.name;
-                    input.value = '';
-                    if (input.type === 'checkbox') {
-                        input.checked = false;
+                    const oldName = input.name;
+                    const newName = oldName.replace(/\[0\]/, `[${index}]`);
+                    input.name = newName;
+                    input.id = newName;
+
+                    // Set value from oldData if available
+                    if (oldData) {
+                        const fieldName = oldName.match(/\[([a-z_]+)\]$/);
+                        if (fieldName && fieldName[1]) {
+                            const field = fieldName[1];
+                            if (field in oldData) {
+                                if (input.type === 'checkbox') {
+                                    input.checked = oldData[field] ? true : false;
+                                } else {
+                                    input.value = oldData[field] || '';
+                                }
+                            }
+                        }
+                    } else {
+                        // Reset value if no old data
+                        if (input.type === 'checkbox') {
+                            input.checked = false;
+                        } else if (input.type !== 'hidden') {
+                            input.value = '';
+                        }
                     }
                 }
             });
 
-            // Update label for's
+            // Update label for attributes
             template.querySelectorAll('label').forEach(label => {
                 if (label.getAttribute('for')) {
-                    label.setAttribute('for', label.getAttribute('for').replace(/\[0\]/, `[${memberIndex}]`));
+                    label.setAttribute('for', label.getAttribute('for').replace(/\[0\]/, `[${index}]`));
                 }
             });
 
             // Update hamil container ID
             const hamilContainer = template.querySelector('[id^="hamilContainer"]');
             if (hamilContainer) {
-                hamilContainer.id = `hamilContainer${memberIndex}`;
-                hamilContainer.style.display = 'none';
+                hamilContainer.id = `hamilContainer${index}`;
+
+                // Set visibility based on gender
+                const genderSelect = template.querySelector(`select[name="family_members[${index}][jk]"]`);
+                if (genderSelect) {
+                    hamilContainer.style.display = genderSelect.value === 'perempuan' ? 'block' : 'none';
+                } else {
+                    hamilContainer.style.display = 'none';
+                }
             }
 
             // Show remove button for this new member
@@ -323,9 +427,9 @@
             document.getElementById('familyMembersContainer').appendChild(template);
 
             // Re-attach change event for gender select
-            const newGenderSelect = template.querySelector(`select[name="family_members[${memberIndex}][jk]"]`);
+            const newGenderSelect = template.querySelector(`select[name="family_members[${index}][jk]"]`);
             newGenderSelect.addEventListener('change', function() {
-                const hamilContainer = document.getElementById(`hamilContainer${memberIndex}`);
+                const hamilContainer = document.getElementById(`hamilContainer${index}`);
                 hamilContainer.style.display = this.value === 'perempuan' ? 'block' : 'none';
             });
         }
