@@ -7,6 +7,7 @@ pipeline {
         USER      = 'jenkins-agent'
         HOST      = '100.94.10.64' // <-- GANTI INI
         PROJECT_PATH = '/var/www/html/lets-input' // <-- GANTI INI
+        DB_NAME = 'letsinput'
     }
 
     stages {
@@ -15,6 +16,37 @@ pipeline {
                 // Jenkins otomatis mengambil kode dari repo yang memicu job ini
                 echo 'Checking out code...'
                 checkout scm
+            }
+        }
+
+        stage('Backup Database') {
+            steps {
+                sshagent(credentials: ['vm-ssh-key']) {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no ${USER}@${HOST} '
+                            echo "--- MEMULAI PROSES BACKUP DATABASE ---"
+
+                            # Tentukan lokasi penyimpanan backup di VM
+                            BACKUP_PATH="/home/${USER}/db_backups"
+                            mkdir -p \$BACKUP_PATH
+
+                            # Buat nama file dinamis menggunakan perintah date di Linux
+                            FILENAME="backup_\$(date +%Y%m%d_%H%M%S).sql.gz"
+
+                            echo "Membuat backup: \$FILENAME di lokasi \$BACKUP_PATH"
+                                
+                            # Jalankan mysqldump di VM dan kompres hasilnya
+                            # Kredensial dibaca dari ~/.my.cnf (lebih aman)
+                            mysqldump ${DB_NAME} | gzip > \$BACKUP_PATH/\$FILENAME
+
+                            echo "--- BACKUP DATABASE SELESAI ---"
+
+                            # Opsional: Hapus backup yang lebih tua dari 7 hari
+                            echo "Menghapus backup yang lebih tua dari 7 hari..."
+                            find \$BACKUP_PATH -type f -mtime +7 -name '*.sql.gz' -delete
+                        '
+                    """
+                }
             }
         }
 
