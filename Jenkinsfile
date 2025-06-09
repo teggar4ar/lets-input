@@ -65,7 +65,7 @@ pipeline {
                                 php artisan down || true
 
                                 echo "--- MENARIK KODE TERBARU DARI GIT ---"
-                                git pull origin main
+                                git fetch origin && git reset --hard origin/early
 
                                 echo "--- MENGINSTALL DEPENDENSI COMPOSER ---"
                                 composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
