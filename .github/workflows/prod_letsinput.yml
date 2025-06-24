@@ -53,6 +53,10 @@ jobs:
       - name: Build frontend assets
         run: npm run build
 
+      # 8. Generate Application Key Laravel
+      - name: Generate Laravel Application Key
+        run: php artisan key:generate
+        
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
