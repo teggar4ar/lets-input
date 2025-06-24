@@ -8,6 +8,7 @@ use App\Services\PendudukService;
 use App\Services\ExportService;
 use App\Repositories\PendudukRepository;
 use App\Repositories\ReferenceDataRepository;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -45,5 +46,9 @@ class AppServiceProvider extends ServiceProvider
     {
         // Fix for MySQL "Specified key was too long" error
         Schema::defaultStringLength(191);
+
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
     }
 }
